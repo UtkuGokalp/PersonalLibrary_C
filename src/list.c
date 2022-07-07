@@ -15,6 +15,10 @@ typedef struct List
 List* CreateList()
 {
     List* list = (List*)calloc(1, sizeof(List));
+    if (list == NULL)
+    {
+        return NULL;
+    }
     list->capacity = INITIAL_CAPACITY;
     list->length = 0;
     list->values = NULL;
