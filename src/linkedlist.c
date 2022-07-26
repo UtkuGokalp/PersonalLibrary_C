@@ -91,7 +91,7 @@ bool AddToLinkedList(LinkedList* list, void* data)
     {
         return false;
     }
-    
+
     if (list->first_node == NULL)
     {
         list->first_node = CreateNewNode(data, NULL, NULL);
@@ -209,6 +209,10 @@ bool ClearLinkedList(LinkedList* list)
 
 size_t GetLinkedListLength(const LinkedList* list)
 {
+    if (list == NULL)
+    {
+        return -1;
+    }
     return list->length;
 }
 

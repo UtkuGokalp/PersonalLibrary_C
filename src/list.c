@@ -31,7 +31,7 @@ void DestroyList(List* list)
     {
         return;
     }
-    
+
     if (list->values != NULL)
     {
         free(list->values);
@@ -45,7 +45,7 @@ void AddToList(List* list, void* value)
     {
         return;
     }
-    
+
     if (list->values == NULL)
     {
         list->values = calloc(list->capacity, sizeof(void*));
@@ -73,7 +73,7 @@ bool RemoveFromListAtIndex(List* list, size_t index)
     {
         return false;
     }
-    
+
     for (size_t i = index; i < list->length - 1; i++)
     {
         list->values[i] = list->values[i + 1];
@@ -107,7 +107,7 @@ size_t GetListLength(const List* list)
     {
         return -1;
     }
-    
+
     return list->length;
 }
 
