@@ -24,20 +24,6 @@ const char* get_file_name(const char* file_path)
     return (file_path + lastSlashIndex + 1);
 }
 
-void handle_mount_directory(const char* directory_path)
-{
-    struct stat st = { 0 };
-    if (stat(directory_path, &st) == -1)
-    {
-        printf("Creating mount directory\n");
-        char* command = (char*)calloc(1, strlen("mkdir ") + strlen(directory_path) + 1);
-        strcat(command, "mkdir ");
-        strcat(command, directory_path);
-        system(command);
-        free(command);
-    }
-}
-
 char* create_string(const char* pieces[], size_t length)
 {
     size_t string_length = 0;
@@ -61,6 +47,17 @@ void execute_command(const char* command_pieces[], size_t length)
     system(command);
     printf("\n");
     free(command);
+}
+
+void handle_mount_directory(const char* directory_path)
+{
+    struct stat st = { 0 };
+    if (stat(directory_path, &st) == -1)
+    {
+        const char* command_pieces[] = { "mkdir ", directory_path };
+        printf("Creating mount directory\n");
+        execute_command(command_pieces, ArraySize(command_pieces));
+    }
 }
 
 int main(int argc, const char* argv[])
