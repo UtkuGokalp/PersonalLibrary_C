@@ -64,7 +64,7 @@ int main(int argc, const char* argv[])
 {
     if (argc != 2)
     {
-        printf("Usage: fmount <file_name>\n");
+        printf("Usage: extractiso <file_name>\n");
         return EXIT_FAILURE;
     }
 
