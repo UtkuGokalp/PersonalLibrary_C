@@ -1,0 +1,6 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/ugklp/Desktop/Development/PersonalLibrary_C/extractiso'
+sudo gcc -Wall -Wextra -o /usr/bin/extractiso ./src/*.c -I./include -lm -lpthread
+extractiso
+make: Leaving directory '/home/ugklp/Desktop/Development/PersonalLibrary_C/extractiso'
+ 

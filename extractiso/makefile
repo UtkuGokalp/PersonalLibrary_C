@@ -10,4 +10,4 @@ compile:
 	sudo $(CC) $(CFLAGS) -o $(TARGET) $(SRC) -I$(INCLUDE) -lm -lpthread
 
 run:
-	fmount
+	extractiso

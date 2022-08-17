@@ -24,6 +24,18 @@ const char* get_file_name(const char* file_path)
     return (file_path + lastSlashIndex + 1);
 }
 
+char* get_directory_path(const char* file_path)
+{
+    const char* file_name = get_file_name(file_path);
+    size_t directory_path_length = strlen(file_path) - strlen(file_name) + 1;
+    char* directory_path = (char*)calloc(directory_path_length, 1);
+    for (size_t i = 0; i < directory_path_length - 1; i++) //-1 to allow for '\0'
+    {
+        directory_path[i] = file_path[i];
+    }
+    return directory_path;
+}
+
 char* create_string(const char* pieces[], size_t length)
 {
     size_t string_length = 0;
@@ -68,27 +80,27 @@ int main(int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
-    const char* mount_file_path = argv[1];
-    const char* mount_file_name = get_file_name(mount_file_path);
-    const char* DESKTOP_PATH = "/home/ugklp/Desktop/";
+    const char* iso_file_path = argv[1];
+    const char* iso_file_name = get_file_name(iso_file_path);
+    char* parent_path = get_directory_path(iso_file_path);
 
     //Create mount directory
-    const char* directory_path_pieces[] = { DESKTOP_PATH, mount_file_name, "_Mount" };
+    const char* directory_path_pieces[] = { parent_path, iso_file_name, "_Mount" };
     char* mount_directory_path = create_string(directory_path_pieces, ArraySize(directory_path_pieces));
     handle_mount_directory(mount_directory_path);
 
     //Mount
-    const char* mount_command_pieces[] = { "sudo mount ", mount_file_path, " ", mount_directory_path };
+    const char* mount_command_pieces[] = { "sudo mount ", iso_file_path, " ", mount_directory_path };
     printf("Mounting\n");
     execute_command(mount_command_pieces, ArraySize(mount_command_pieces));
 
     //Copy data to a new (non-mounted) directory
-    const char* extract_mount_data_command_pieces[] = { "cp -r ", DESKTOP_PATH, mount_file_name, "_Mount", " ", DESKTOP_PATH, mount_file_name, "_MountData"};
+    const char* extract_mount_data_command_pieces[] = { "cp -r ", parent_path, iso_file_name, "_Mount", " ", parent_path, iso_file_name, "_MountData"};
     printf("Extracting mount data\n");
     execute_command(extract_mount_data_command_pieces, ArraySize(extract_mount_data_command_pieces));
 
     //Change permissions for the extracted data directory
-    const char* change_permissions_command_pieces[] = { "chmod +rw ", DESKTOP_PATH, mount_file_name, "_MountData" };
+    const char* change_permissions_command_pieces[] = { "chmod +rw ", parent_path, iso_file_name, "_MountData" };
     printf("Changing permissions\n");
     execute_command(change_permissions_command_pieces, ArraySize(change_permissions_command_pieces));
 
@@ -103,5 +115,6 @@ int main(int argc, const char* argv[])
     execute_command(remove_mount_dir_command_pieces, ArraySize(remove_mount_dir_command_pieces));
 
     free(mount_directory_path);
+    free(parent_path);
     return EXIT_SUCCESS;
 }
