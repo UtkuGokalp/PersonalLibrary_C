@@ -101,8 +101,18 @@ int main(int argc, const char* argv[])
 
     //Change permissions for the extracted data directory
     const char* change_permissions_command_pieces[] = { "chmod +rw ", parent_path, iso_file_name, "_MountData" };
-    printf("Changing permissions\n");
+    printf("Changing permissions - Step #1\n");
     execute_command(change_permissions_command_pieces, ArraySize(change_permissions_command_pieces));
+
+    //Change permissions for the directories in the extracted data directory
+    const char* change_directory_permissions_in_data_directory_command_pieces[] = { "find ", parent_path, iso_file_name, "_MountData -type d -exec chmod +rw {} +" };
+    printf("Changing permissions - Step #2\n");
+    execute_command(change_directory_permissions_in_data_directory_command_pieces, ArraySize(change_directory_permissions_in_data_directory_command_pieces));
+
+    //Change permissions for the files in the extracted data directory
+    const char* change_file_permissions_in_data_directory_command_pieces[] = { "find ", parent_path, iso_file_name, "_MountData -type f -exec chmod +rw {} +" };
+    printf("Changing permissions - Step #3\n");
+    execute_command(change_file_permissions_in_data_directory_command_pieces, ArraySize(change_file_permissions_in_data_directory_command_pieces));
 
     //Unmount the mount directory
     const char* unmount_command_pieces[] = { "sudo umount ", mount_directory_path };
