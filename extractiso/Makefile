@@ -11,3 +11,6 @@ compile:
 
 run:
 	extractiso
+
+clean:
+	sudo rm $(TARGET)
