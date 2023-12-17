@@ -2,8 +2,6 @@
 
 #define INITIAL_QUEUE_CAPACITY  4
 
-#define QUEUE_VALUE_TYPE int
-
 typedef struct Queue
 {
     size_t capacity;
@@ -75,7 +73,6 @@ QUEUE_VALUE_TYPE GetValue(const Queue* queue, size_t index)
 
 void Enqueue(Queue* queue, QUEUE_VALUE_TYPE value)
 {
-
 	if (queue->enqueuePointer + 1 > queue->values + GetQueueCapacity(queue)) //Queue capacity is exceeded
 	{
 		EnlargeQueue(queue);
@@ -99,4 +96,7 @@ size_t GetQueueCapacity(const Queue* queue)
 	return queue->capacity;
 }
 
-
+size_t GetQueueLength(const Queue* queue)
+{
+	return queue->enqueuePointer - queue->dequeuePointer;
+}
