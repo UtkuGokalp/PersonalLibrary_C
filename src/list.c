@@ -12,7 +12,7 @@ typedef struct List
     size_t length;
 } List;
 
-List* CreateList()
+List* CreateList(void)
 {
     List* list = (List*)calloc(1, sizeof(List));
     if (list == NULL)

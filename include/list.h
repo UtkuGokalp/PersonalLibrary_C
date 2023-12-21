@@ -5,7 +5,7 @@
 
 typedef struct List List;
 
-List* CreateList();
+List* CreateList(void);
 //Frees the given list. Nothing is done if the list was NULL.
 void DestroyList(List* list);
 //Adds the given item to the list. Nothing is done if list was NULL.
