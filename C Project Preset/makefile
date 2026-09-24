@@ -1,11 +1,12 @@
 #Variables
 EXECUTABLE_NAME = preset
+STANDARD=c99
 
 #Toolchain
 CC = gcc
 
 #Flags
-CFLAGS = -Wall -Wextra -Werror -Wshadow -Wpedantic -MMD -MP
+CFLAGS = -std=$(STANDARD) -Wall -Wextra -Werror -Wshadow -Wpedantic -MMD -MP
 DEBUG_FLAGS = -g -O0
 RELEASE_FLAGS = -O2
 LDFLAGS = 
