@@ -59,9 +59,16 @@ $(TARGET): $(OBJS) $(LIBS)
 	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $@
 
 #Compiling
+#|| means run the following command if the previous one (compilation)
+#fails. That command is there to remove the related .o and .d files so
+#they don't cause a problem with future compilations. It basically ensures
+#the compiler will get stuck on the file with the actual error before
+#proceeding with another one (which caused weird issues like deleting
+#.o or .d files of files that come later in the compilation process, even
+#if that file wasn't changed at all).
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(create_dirs)
-	$(CC) $(CFLAGS) -c -I $(INCLUDE_DIR) -o $@ $^
+	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $< -o $@ || { rm -f $@ $(@:.o=.d); exit 1; }
 
 #Make sure .d files are used (they allow .o files to be recompiled if a .h file they depend on is changed)
--include $(DEPS)
+-include -I $(DEPS)
