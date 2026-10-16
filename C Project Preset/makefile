@@ -22,7 +22,7 @@ BIN_DIR = $(BUILD_DIR)/bin
 
 #Files
 TARGET = $(BIN_DIR)/$(EXECUTABLE_NAME)
-LIBS = $(shell find $(LIB_DIR) -type f -name '*.a') 
+LIBS = $(shell mkdir -p $(LIB_DIR) && find $(LIB_DIR) -type f -name '*.a')
 SRC = $(shell find $(SRC_DIR) -type f -name '*.c')
 OBJS = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEPS = $(OBJS:.o=.d)
