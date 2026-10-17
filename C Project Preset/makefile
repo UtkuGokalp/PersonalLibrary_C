@@ -56,7 +56,7 @@ run: all
 #Linking
 $(TARGET): $(OBJS) $(LIBS)
 	$(create_dirs)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $@
+	$(CC) $(OBJS) $(LDLIBS) $(LDFLAGS) -o $@
 
 #Compiling
 #|| means run the following command if the previous one (compilation)
